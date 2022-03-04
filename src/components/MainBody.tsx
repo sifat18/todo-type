@@ -44,11 +44,11 @@ export default function MainBody() {
         removeFromDb(index)
     }
     return (
-        <div>
-            <div>
-                <input required className='' type="text" onChange={handleOnChange} placeholder='name' name="name" id="name" />
-                <input required className='' type="number" onChange={handleOnChange} placeholder='days' name="expired" id="expired" />
-                <button className='' onClick={addTask}>add </button>
+        <div className='container text-center'>
+            <div className='input-group mb-3 '>
+                <input required className='form-control w-25 ' type="text" onChange={handleOnChange} placeholder='name' name="name" id="name" />
+                <input required className='form-control w-25 mx-3' type="number" onChange={handleOnChange} placeholder='days' name="expired" id="expired" />
+                <button className='btn btn-success px-4' onClick={addTask}>Add </button>
             </div>
             <Task items={taskDisplay} onclick={removes}></Task>
 
