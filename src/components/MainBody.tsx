@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { addToDb, getStoredCart } from './db';
+import { addToDb, getStoredCart, removeFromDb } from './db';
+import Task from './Task';
 
 interface Tasks {
     name: string;
@@ -10,7 +11,7 @@ export default function MainBody() {
     const [taskName, setName] = useState<string>('')
     const [days, setTime] = useState<number>(0)
     const [task, setTask] = useState<Tasks[]>([])
-    const [taskDisplay, setDisplay] = useState([])
+    const [taskDisplay, setDisplay] = useState<Tasks[]>([])
     // const [task, setTask] = useState<Tasks[]>([])
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -22,8 +23,8 @@ export default function MainBody() {
     };
 
     useEffect(() => {
-        const savedCart = getStoredCart();
-        savedCart.map((L: Tasks): void => console.log(L))
+        setDisplay(getStoredCart());
+
     }, [task])
 
 
@@ -37,6 +38,11 @@ export default function MainBody() {
         addToDb(newTask)
     };
 
+    const removes = (index: string): void => {
+        const s = task.filter(i => i.name !== index)
+        setTask(s)
+        removeFromDb(index)
+    }
     return (
         <div>
             <div>
@@ -44,6 +50,8 @@ export default function MainBody() {
                 <input required className='' type="number" onChange={handleOnChange} placeholder='days' name="expired" id="expired" />
                 <button className='' onClick={addTask}>add </button>
             </div>
+            <Task items={taskDisplay} onclick={removes}></Task>
+
         </div>
     )
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import Task from './Task';
 
 interface Tasks {
     name: string;
@@ -20,14 +21,15 @@ const getDb = () => localStorage.getItem('activity');
 const updateDb = (cart: Tasks[]): void => {
     localStorage.setItem('activity', JSON.stringify(cart));
 }
-const removeFromDb = (id: Tasks): void => {
+const removeFromDb = (id: string): void => {
     const exists = getDb();
     if (!exists) {
 
     }
     else {
-        const activity = JSON.parse(exists);
-        activity[id.name] === id.expired && delete activity[id.name];
+        let activity = JSON.parse(exists);
+        activity = activity.filter((i: Tasks) => i.name !== id)
+
         updateDb(activity);
     }
 }
